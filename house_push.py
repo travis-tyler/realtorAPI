@@ -10,13 +10,13 @@ from config import key, host
 pp = pprint.PrettyPrinter(indent=2)
 
 # Set base URL and querystring for params
-url = "https://realtor.p.rapidapi.com/properties/list-for-sale"
+url = 'https://realtor.p.rapidapi.com/properties/list-for-sale'
 
-querystring = {"city":"Austin",
-               "offset":"0",
-               "limit":"200",
-               "state_code":"TX",
-               "sort":"relevance",
+querystring = {'city':'Austin',
+               'offset':'0',
+               'limit':'200',
+               'state_code':'TX',
+               'sort':'relevance',
                'prop_type': 'multi_family',
                'postal_code':'78751'
               }
