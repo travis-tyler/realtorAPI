@@ -1,13 +1,14 @@
 # Import dependencies 
 import requests
 import json
-import pprint
-import statistics as st 
 import time
-from config import key, host
+import os
+import smtplib
+from config import key, host, email_user, email_pass, email_recipient
 
-# Set pprint
-pp = pprint.PrettyPrinter(indent=2)
+email_address = email_user
+email_password = email_pass
+recipient = email_recipient
 
 # Set base URL and querystring for params
 url = 'https://realtor.p.rapidapi.com/properties/list-for-sale'
@@ -51,11 +52,17 @@ def list_check(new_listings):
     for listing in new_listings:
         if listing not in all_listings:
             all_listings.append(listing)
-            subject = f"MULTI-FAMILTY PROPERTY FOR SALE: {listing['address']}"
-            body = f"Address: {listing['address']}\nPrice: {listing['price']}\nURL: {listing['url']}"
-            print("Update at %s" % time.ctime())
-            print(subject)        
-            print(body)
-            print('-------')
+            with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
+                smtp.ehlo()
+                smtp.starttls()
+                smtp.ehlo()
+
+                smtp.login(email_address, email_password)
+
+                subject = f"MULTI-FAMILTY PROPERTY FOR SALE: {listing['address']}"
+                body = f"Address: {listing['address']}\nPrice: {listing['price']}\nURL: {listing['url']}"
+                msg = f'Subject: {subject}\n\n{body}'
+
+                smtp.sendmail(email_address, recipient, msg)
 
 list_check(price_check(query()))
