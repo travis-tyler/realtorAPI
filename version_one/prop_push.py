@@ -15,7 +15,9 @@ querystring = {'city':'Austin',
                'limit':'200',
                'state_code':'TX',
                'sort':'newest',
-               'prop_type': 'multi_family'
+               'prop_type': 'multi_family',
+               'is_pending': False,
+               'is_contingent': False
               }
 
 headers = {
